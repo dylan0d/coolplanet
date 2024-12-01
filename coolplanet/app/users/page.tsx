@@ -8,17 +8,20 @@ export default function Page() {
 
   return (
     <>
-    <div style={{display: 'flex'}} className="justify-normal flex-col p-10">
+    <div className="flex justify-normal flex-col p-10">
       <h1 className="text-7xl font-extrabold text-center mb-5">User Dashboard</h1>
+      <div className="text-center">Page {pageNum} </div>
       <Table currentPage={pageNum}></Table>
     </div>
-    {pageNum >1 && <button onClick={() => setPageNum(pageNum-1)}>
+    <div className="flex justify-around">
+    <button className={`${pageNum > 1 ? 'visible' : 'invisible'}`} onClick={() => setPageNum(pageNum-1)}>
       Previous Page
-    </button>}
+    </button>
 
-    {pageNum <5 && <button onClick={() => setPageNum(pageNum+1)}>
+    <button className={`${pageNum < 5 ? 'visible' : 'invisible'}`} onClick={() => setPageNum(pageNum+1)}>
       Next Page
-    </button>}
+    </button>
+    </div>
     </>
   )
   }

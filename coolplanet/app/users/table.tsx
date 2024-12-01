@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Skeleton from './skeleton'
 
 export default function Table({
     currentPage,
@@ -8,16 +9,16 @@ export default function Table({
     currentPage: number;
   }) {
     const [userData, setUserData] = useState([])
+    const [isLoading, setLoading] = useState(true)
     useEffect(() => {
         console.log("in table use effect")
         fetch('/api/users?page='+currentPage)
           .then((res) => res.json())
           .then((data) => {
             setUserData(data)
-            // setLoading(false)
+            setLoading(false)
           })
       }, [currentPage])
-    console.log('fetching data')
     let userComponents = userData.map((user: any) => (
       <div key={user.id}className="border-2 border-cyan-500 rounded-lg text-center">
         <Link href={`/users/${user.id}`}>
@@ -26,9 +27,13 @@ export default function Table({
       </div>
     ))
 
-    return <div className="grid grid-cols-2 gap-4">
-    {
-      ...userComponents
-    }
-  </div>
+    return (
+    <>
+      {isLoading && <Skeleton/>}
+      {!isLoading && <div className="grid grid-cols-2 gap-4">
+      {
+        ...userComponents
+      }
+    </div>}
+    </>)
   }
