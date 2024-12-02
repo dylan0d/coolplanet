@@ -10,10 +10,10 @@ export default function Page({
   }) {
     const [user, setUser] = useState<any>()
     const [isLoading, setLoading] = useState(true)
+    const [skillsCells, setSkillsCells] = useState([])
+    const [companyDetails, setCompanyDetails] = useState<any>(null)
     let id = -1
     params.then(p => {id = parseInt(p.id)})    
-    let skillsCells = []
-    let companyDetails;
     useEffect(() => {
       if (id > 0) {
         fetch(`/api/users/${id}`)  
@@ -22,14 +22,13 @@ export default function Page({
             setUser(data)
             setLoading(false)
             if (data) {
-            skillsCells = data.skills.map((skill) => (
+            setSkillsCells(data.skills.map((skill) => (
               <div key={skill}>{skill}</div>
-            ))
-            companyDetails = <div className="flex flex-col">
+            )))
+            setCompanyDetails(<div className="flex flex-col">
             <div>Name: {data.company.name}</div>
             <div>Department: {data.company.department}</div>
-          </div>
-
+          </div>)
             }
           })
       }

@@ -11,7 +11,6 @@ export default function Table({
     const [userData, setUserData] = useState([])
     const [isLoading, setLoading] = useState(true)
     useEffect(() => {
-        console.log("in table use effect")
         fetch('/api/users?page='+currentPage)
           .then((res) => res.json())
           .then((data) => {
